@@ -10,4 +10,7 @@ class RegisterController @Inject() extends Controller {
     Ok(views.html.register())
   }
 
+  def create = Action {
+    NotFound(views.html.register())
+  }
 }
