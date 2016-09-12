@@ -17,8 +17,9 @@ class HomeController @Inject() extends Controller {
    * will be called when the application receives a `GET` request with
    * a path of `/`.
    */
+  val message = "私の新しいアプリケーション"
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index(message))
   }
 
 }
