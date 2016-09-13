@@ -1,12 +1,15 @@
+@(userForm: Form[UserModel])(implicit messages: Messages)
+
+@import helper._
+
 @main("アカウント登録") {
-<h1>アカウント登録ページ</h1>
-<form action="register" method="post">
-    <dl>
-        <dt>メールアドレス</dt>
-        <dd><input type="email"></dd>
-        <dt>パスワード</dt>
-        <dd><input type="password"></dd>
-    </dl>
-    <input type="submit" value="登録">
-</form>
+    <h1>アカウント登録ページ</h1>
+    @form(action = routes.RegisterController.create()) {
+        <fieldset>
+            <legend>input user info.</legend>
+            @inputText(userForm("email"))
+            @inputText(userForm("password"))
+        </fieldset>
+        <input type="submit" value="登録">
+    }
 }
