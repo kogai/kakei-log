@@ -3,11 +3,9 @@
 @main("アカウント登録") {
     <h1>アカウント登録ページ</h1>
     @form(action = routes.RegisterController.create()) {
-        <fieldset>
-            <legend>input user info.</legend>
-            <input type="email" name="email">
-            <input type="password" name="password">
-        </fieldset>
+        <label for="email">メールアドレス</label><input type="email" name="email" class="Form__input">
+        <label for="password">パスワード</label><input type="password" name="password" class="Form__input">
+        6~48文字
         <input type="submit" value="登録">
     }
 }
