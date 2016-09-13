@@ -11,18 +11,18 @@ import models._
 class RegisterController @Inject() (val messagesApi: MessagesApi) extends Controller with I18nSupport {
   var userForm = Form {
     mapping(
-      "email" -> text,
+      "email" -> email,
       "password" -> text
     )(UserModel.apply)(UserModel.unapply)
   }
 
   def index = Action {
-    Ok(views.html.register(userForm))
+    Ok(views.html.register())
   }
 
   def create = Action { implicit request =>
     val user = userForm.bindFromRequest.get
-    println(user)
+    println(user.email, user.password)
     Ok(views.html.index("ok"))
   }
 }

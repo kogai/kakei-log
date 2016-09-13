@@ -1,5 +1,3 @@
-@(userForm: Form[UserModel])(implicit messages: Messages)
-
 @import helper._
 
 @main("アカウント登録") {
@@ -7,8 +5,8 @@
     @form(action = routes.RegisterController.create()) {
         <fieldset>
             <legend>input user info.</legend>
-            @inputText(userForm("email"))
-            @inputText(userForm("password"))
+            <input type="email" name="email">
+            <input type="password" name="password">
         </fieldset>
         <input type="submit" value="登録">
     }
