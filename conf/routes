@@ -1,4 +1,7 @@
 GET     /                           controllers.HomeController.index
+GET     /login                      controllers.LoginController.index
+POST    /login                      controllers.LoginController.login
+DELETE  /login                      controllers.LoginController.logout
 GET     /register                   controllers.RegisterController.index
 POST    /register                   controllers.RegisterController.create
 

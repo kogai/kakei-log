@@ -1,11 +1,12 @@
 @import helper._
 
-@main("アカウント登録ページ") {
-    <h1>アカウント登録ページ</h1>
-    @form(action = routes.RegisterController.create()) {
+@(title: String)
+@main("ログインページ"){
+    <h1>@title</h1>
+    @form(action = routes.LoginController.login()) {
         <label for="email">メールアドレス</label><input type="email" name="email" class="Form__input">
         <label for="password">パスワード</label><input type="password" name="password" class="Form__input">
         6~48文字
-        <input type="submit" value="登録" class="Form__button">
+        <input type="submit" value="ログイン" class="Form__button">
     }
 }
