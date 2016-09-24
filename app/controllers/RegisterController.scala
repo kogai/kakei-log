@@ -17,7 +17,7 @@ class RegisterController @Inject() (val messagesApi: MessagesApi) extends Contro
   }
 
   def index = Action {
-    Ok(views.html.register())
+    Ok(views.html.register("アカウント登録ページ"))
   }
 
   def create = Action { implicit request =>
