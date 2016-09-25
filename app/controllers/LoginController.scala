@@ -26,7 +26,7 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
     if (user.email == "test@test.com" && user.password == "test") {
       Ok(views.html.index("ログインしました"))
     } else {
-      Forbidden(views.html.index("ログインに失敗しました"))
+      Unauthorized(views.html.error("ログインに失敗しました"))
     }
   }
 
