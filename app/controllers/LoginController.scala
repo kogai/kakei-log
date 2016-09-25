@@ -22,9 +22,10 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
   }
 
   def login = Action { implicit request =>
+    val sessionVar = "userInfo"
     val user = userForm.bindFromRequest.get
     if (user.email == "test@test.com" && user.password == "test") {
-      Ok(views.html.index("ログインしました"))
+      Ok(views.html.index("ログインしました")).withSession(sessionVar -> "my-session-string")
     } else {
       Unauthorized(views.html.error("ログインに失敗しました"))
     }
