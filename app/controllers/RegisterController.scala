@@ -12,12 +12,12 @@ class RegisterController @Inject() (val messagesApi: MessagesApi) extends Contro
   var userForm = Form {
     mapping(
       "email" -> email,
-      "password" -> text
+      "password" -> text.verifying("4~32文字以上", { p => p.length() >= 4 && p.length <= 32 })
     )(UserModel.apply)(UserModel.unapply)
   }
 
   def index = Action {
-    Ok(views.html.register("アカウント登録ページ"))
+    Ok(views.html.register(userForm))
   }
 
   def create = Action { implicit request =>

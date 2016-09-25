@@ -1,6 +1,6 @@
 @import play.api.mvc.Call
 @import helper.form
-@(endpoint: Call)
+@(endpoint: Call, userForm: Form[UserModel])
 
 @form(action = endpoint, 'class -> "uk-panel uk-panel-box uk-form uk-form-horizontal") {
     <div class="uk-form-row">
@@ -11,6 +11,22 @@
         <label for="password" class="uk-form-label">パスワード</label>
         <input type="password" name="password" class="uk-form-large uk-width-1-1" placeholder="4~32文字">
     </div>
+    @if(userForm.hasErrors) {
+        <div class="uk-form-row">
+            <ul class="uk-list uk-list-space">
+            @for(error <- userForm.errors) {
+                <li class="uk-alert uk-alert-danger">
+                    @if(error.message == "error.email") {
+                        メールアドレス
+                    } else {
+                        @error.message
+                    }
+                    を入力して下さい
+                </li>
+            }
+            </ul>
+        </div>
+    }
     <div class="uk-form-row">
         <button type="submit" class="uk-button uk-button-primary uk-button-large uk-width-1-1">送信</button>
     </div>

@@ -1,9 +1,7 @@
-@import helper._
-
-@(title: String)
+@(userForm: Form[UserModel])
 @main("アカウント登録ページ") {
     <div class="uk-container-center uk-width-medium-1-3">
-        <h1 class="uk-h2 uk-margin-top uk-margin-bottom">@title</h1>
-        @shared.account(routes.RegisterController.create())
+        <h1 class="uk-h2 uk-margin-top uk-margin-bottom">アカウント登録</h1>
+        @shared.account(routes.RegisterController.create(), userForm)
     </div>
 }
