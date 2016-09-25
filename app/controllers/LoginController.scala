@@ -2,6 +2,7 @@ package controllers
 
 import javax.inject._
 
+import play.api.Logger
 import play.api.mvc._
 import play.api.i18n._
 import play.api.data.Form
@@ -24,15 +25,16 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
   def login = Action { implicit request =>
     val sessionVar = "userInfo"
     val user = userForm.bindFromRequest.get
+    print(user.email, user.password)
     if (user.email == "test@test.com" && user.password == "test") {
-      Ok(views.html.index("ログインしました")).withSession(sessionVar -> "my-session-string")
+      Ok(views.html.index("ログインしました"))
+        .withSession(sessionVar -> "user-id")
     } else {
       Unauthorized(views.html.error("ログインに失敗しました"))
     }
   }
 
   def logout = Action { implicit request =>
-    // セッションの削除処理
-    Ok(views.html.index("ログアウトしました"))
+    Ok(views.html.index("ログアウトしました")).withNewSession
   }
 }
