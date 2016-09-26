@@ -5,3 +5,17 @@ Playのサンプルアプリケーション
 ```bash
 activator run
 ```
+
+## DBコンテナの起動
+
+```bash
+docker-compose up -d mysql
+```
+
+## DBコンテナへの接続
+
+```bash
+docker-compose exec mysql bash
+mysql -udocker -pdocker
+```
+

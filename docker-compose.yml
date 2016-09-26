@@ -1,0 +1,7 @@
+mysql:
+  environment:
+    - MYSQL_ROOT_PASSWORD=docker
+    - MYSQL_PASSWORD=docker
+    - MYSQL_USER=docker
+    - MYSQL_DATABASE=kake-log-development
+  build: ./container/mysql
