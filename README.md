@@ -19,3 +19,8 @@ docker-compose exec mysql bash
 mysql -udocker -pdocker
 ```
 
+## 依存ライブラリのインストール
+
+```bash
+activator compile
+```
