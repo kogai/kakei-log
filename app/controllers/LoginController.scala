@@ -6,24 +6,25 @@ import play.api.mvc._
 import play.api.i18n._
 import play.api.data.Form
 import play.api.data.Forms._
-import models._
+import play.api.libs.concurrent.Execution.Implicits._
+import models.{UserModel, UserForm, Users}
 
 @Singleton
 class LoginController @Inject() (val messagesApi: MessagesApi) extends Controller with I18nSupport {
-  var userForm = Form {
-    mapping(
-      "email" -> email,
-      "password" -> text.verifying("4~32文字以上", { p => p.length() >= 4 && p.length <= 32 })
-    )(UserModel.apply)(UserModel.unapply)
-  }
+//  var userForm = Form {
+//    mapping(
+//      "email" -> email,
+//      "password" -> text.verifying("4~32文字以上", { p => p.length() >= 4 && p.length <= 32 })
+//    )(UserModel.apply)(UserModel.unapply)
+//  }
 
   def index = Action {
-    Ok(views.html.login(userForm))
+    Ok(views.html.login(UserForm.form))
   }
 
   def login = Action { implicit request =>
     val sessionVar = "userInfo"
-    userForm.bindFromRequest.fold(
+    UserForm.form.bindFromRequest.fold(
       e => {
         BadRequest(views.html.login(e))
       },
@@ -41,5 +42,20 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
 
   def logout = Action { implicit request =>
     Ok(views.html.index("ログアウトしました")).withNewSession
+  }
+
+  /*
+  def index = Action.async { implicit request =>
+    UserService.listAllUsers map { users =>
+      Ok(views.html.index(UserForm.form, users))
+    }
+  }
+  */
+
+  def list = Action.async { implicit request =>
+    Users.listAll map { users =>
+      println(users)
+      Ok(views.html.index("ユーザのリスト"))
+    }
   }
 }
