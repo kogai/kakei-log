@@ -1,5 +1,7 @@
-# 0 = False 1 = True
+CREATE DATABASE kakei_log_development;
+DROP TABLE User;
 
+# 0 = False 1 = True
 CREATE TABLE User (
   id MEDIUMINT NOT NULL AUTO_INCREMENT,
   password_digest VARCHAR(255) NOT NULL,
@@ -8,8 +10,6 @@ CREATE TABLE User (
   PRIMARY KEY (`id`),
   UNIQUE KEY (`mail_address`)
 );
-
-DROP TABLE User;
 
 INSERT INTO User (password_digest, mail_address, is_verified) VALUES (
   'test',
