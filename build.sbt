@@ -15,4 +15,5 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-slick-evolutions" % "2.0.0"
 )
 
-includeFilter in (Assets, LessKeys.less) := "main.less"
+includeFilter in (Assets, LessKeys.less) := "*.less"
+excludeFilter in (Assets, LessKeys.less) := "_*.less"
