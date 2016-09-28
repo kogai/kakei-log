@@ -5,3 +5,5 @@ mysql:
     - MYSQL_USER=docker
     - MYSQL_DATABASE=kake-log-development
   build: ./container/mysql
+  ports:
+    - "3306:3306"
