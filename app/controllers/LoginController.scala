@@ -37,8 +37,7 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
 
   def list = Action.async { implicit request =>
     Users.listAll map { users =>
-      println(users)
-      Ok(views.html.index("ユーザのリスト"))
+      Ok(views.html.users(users))
     }
   }
 }

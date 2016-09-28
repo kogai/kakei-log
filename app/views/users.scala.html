@@ -1,0 +1,8 @@
+@(users: Seq[UserModel])
+@main("ユーザ一覧ページ") {
+    <ul class="uk-list uk-list-line">
+        @users.map { u =>
+            <li>@u.email / @u.password</li>
+        }
+    </ul>
+}
