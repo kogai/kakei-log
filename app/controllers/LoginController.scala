@@ -1,6 +1,6 @@
 package controllers
 
-import javax.inject._
+import javax.inject.{Singleton, Inject}
 import scala.concurrent.Future
 import play.api.mvc._
 import play.api.i18n._
