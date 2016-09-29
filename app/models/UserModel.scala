@@ -7,6 +7,8 @@ import play.api.db.slick.DatabaseConfigProvider
 import scala.concurrent.Future
 import slick.driver.JdbcProfile
 import slick.driver.MySQLDriver.api._
+import com.github.t3hnar.bcrypt._
+
 
 case class UserModel (email: String, password: String)
 
@@ -27,7 +29,6 @@ class UserTableDef(tag: Tag) extends Table[UserModel2](tag, "User") {
 
   override def * =
     (id, email, password) <>(UserModel2.tupled, UserModel2.unapply)
-//    (email, password) <>(UserModel2.tupled, UserModel2.unapply)
 }
 
 object Users {
@@ -49,6 +50,12 @@ object Users {
 //  }
 
   def listAll: Future[Seq[UserModel2]] = {
+    val password = "test"
+    val hashed = password.bcrypt
+    val isMatch = password.isBcrypted(hashed)
+    println(hashed)
+    println("test-password".bcrypt)
+    println(isMatch)
     dbConfig.db.run(users.result)
   }
 }
