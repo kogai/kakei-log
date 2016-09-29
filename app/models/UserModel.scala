@@ -4,12 +4,12 @@ import play.api.Play
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.db.slick.DatabaseConfigProvider
+import play.api.libs.concurrent.Execution.Implicits._
+
 import scala.concurrent.Future
 import slick.driver.JdbcProfile
 import slick.driver.MySQLDriver.api._
 import com.github.t3hnar.bcrypt._
-import play.api.libs.concurrent.Execution.Implicits._
-
 
 case class UserModel (email: String, password: String)
 

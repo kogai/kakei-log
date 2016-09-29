@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject._
-
+import scala.concurrent.Future
 import play.api.mvc._
 import play.api.i18n._
 import play.api.libs.concurrent.Execution.Implicits._
@@ -13,19 +13,17 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
     Ok(views.html.login(UserForm.form))
   }
 
-  def login = Action { implicit request =>
+  def login = Action.async { implicit request =>
     val sessionVar = "userInfo"
     UserForm.form.bindFromRequest.fold(
       e => {
-        BadRequest(views.html.login(e))
+        Future.successful(BadRequest(views.html.login(e)))
       },
       user => {
-        print(user.email, user.password)
-        if (user.email == "test@test.com" && user.password == "test") {
-          Ok(views.html.index("ログインしました"))
-            .withSession(sessionVar -> "user-id")
-        } else {
-          Unauthorized(views.html.error("ログインに失敗しました"))
+        Users.auth(user.email, user.password).map {
+          case Some(u) => Ok(views.html.index("ログインしました"))
+            .withSession(sessionVar -> u.id.toString)
+          case None => Unauthorized(views.html.error("ログインに失敗しました"))
         }
       }
     )
