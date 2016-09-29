@@ -8,6 +8,7 @@ import scala.concurrent.Future
 import slick.driver.JdbcProfile
 import slick.driver.MySQLDriver.api._
 import com.github.t3hnar.bcrypt._
+import play.api.libs.concurrent.Execution.Implicits._
 
 
 case class UserModel (email: String, password: String)
@@ -48,14 +49,28 @@ object Users {
 //  def get(id: Long): Future[Option[UserModel2]] = {
 //    dbConfig.db.run(users.filter(_.id === id).result.headOption)
 //  }
+  def get(id: Int): Future[Option[UserModel2]] = {
+    dbConfig.db.run(users.filter(_.id === id).result.headOption)
+  }
+
+  def auth(email: String, rawPassword: String): Future[Option[UserModel2]] = {
+    dbConfig.db.run(users.filter(_.email === email).result.headOption)
+      .map {
+        case Some(u) if isMatch(rawPassword, u.password) => Some(u)
+        case Some(u) => None
+        case None => None
+      }
+  }
+
+  private def isMatch(candidate: String, digest: String): Boolean = {
+    candidate.isBcrypted(digest)
+  }
+
+  def digest(rawPassword: String): String = {
+    rawPassword.bcrypt
+  }
 
   def listAll: Future[Seq[UserModel2]] = {
-    val password = "test"
-    val hashed = password.bcrypt
-    val isMatch = password.isBcrypted(hashed)
-    println(hashed)
-    println("test-password".bcrypt)
-    println(isMatch)
     dbConfig.db.run(users.result)
   }
 }
