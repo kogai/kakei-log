@@ -14,7 +14,7 @@ class RegisterController @Inject() (val messagesApi: MessagesApi) extends Contro
 
   def create = Action.async { implicit request =>
     val input = UserForm.form.bindFromRequest.get
-    val newUser = UserModel(0, input.email, input.password)
+    val newUser = UserModel(None, input.email, input.password)
     Users.add(newUser).map { implicit res =>
       println(res)
       Redirect(routes.HomeController.index())

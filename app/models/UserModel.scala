@@ -21,14 +21,14 @@ object UserForm {
   }
 }
 
-case class UserModel (id: Int, email: String, password: String)
+case class UserModel (id: Option[Long], email: String, password: String)
+
 class UserTableDef(tag: Tag) extends Table[UserModel](tag, "User") {
-  def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def email = column[String]("mail_address")
   def password = column[String]("password_digest")
 
-  override def * =
-    (id, email, password) <>(UserModel.tupled, UserModel.unapply)
+  override def * = (id.?, email, password) <> (UserModel.tupled, UserModel.unapply)
 }
 
 object Users {
@@ -48,7 +48,7 @@ object Users {
 //    dbConfig.db.run(users.filter(_.id === id).delete)
 //  }
 
-  def get(id: Int): Future[Option[UserModel]] = {
+  def get(id: Long): Future[Option[UserModel]] = {
     dbConfig.db.run(users.filter(_.id === id).result.headOption)
   }
 
