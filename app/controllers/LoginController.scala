@@ -5,22 +5,23 @@ import scala.concurrent.Future
 import play.api.mvc._
 import play.api.i18n._
 import play.api.libs.concurrent.Execution.Implicits._
-import models.{UserForm, Users}
+
+import models.UserForm
+import dao.UserDAO
 
 @Singleton
-class LoginController @Inject() (val messagesApi: MessagesApi) extends Controller with I18nSupport {
+class LoginController @Inject() (val messagesApi: MessagesApi, val user: UserDAO) extends Controller with I18nSupport {
   def index = Action {
     Ok(views.html.login(UserForm.form))
   }
 
   def login = Action.async { implicit request =>
-    val sessionVar = "userInfo"
     UserForm.form.bindFromRequest.fold(
       e => Future.successful(BadRequest(views.html.login(e))),
-      user => {
-        Users.auth(user.email, user.password).map {
+      input => {
+        user.auth(input.email, input.password).map {
           case Some(u) => Ok(views.html.index("ログインしました"))
-            .withSession(sessionVar -> u.id.toString)
+            .withSession(user.SESSION_KEY -> u.id.toString)
           case None => Unauthorized(views.html.error("ログインに失敗しました"))
         }
       }
@@ -32,7 +33,7 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
   }
 
   def list = Action.async { implicit request =>
-    Users.listAll map { users =>
+    user.listAll map { users =>
       Ok(views.html.users(users))
     }
   }

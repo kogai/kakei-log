@@ -4,13 +4,14 @@ import javax.inject.{Inject, Singleton}
 
 import play.api.mvc._
 import play.api.i18n._
-import models.{UserForm, UserModel, Users}
-
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
+import models.UserForm
+import dao.UserDAO
+
 @Singleton
-class RegisterController @Inject() (val messagesApi: MessagesApi) extends Controller with I18nSupport {
+class RegisterController @Inject() (val messagesApi: MessagesApi, val user: UserDAO) extends Controller with I18nSupport {
   def index = Action {
     Ok(views.html.register(UserForm.form))
   }
@@ -19,7 +20,7 @@ class RegisterController @Inject() (val messagesApi: MessagesApi) extends Contro
     UserForm.form.bindFromRequest.fold(
       e => Future.successful(BadRequest(views.html.register(e))),
       input => {
-        Users.add(input.email, input.password).map {
+        user.add(input.email, input.password).map {
           case true => Redirect(routes.LoginController.index())
           case _ => BadRequest(views.html.error("アカウントの登録に失敗しました"))
         }
