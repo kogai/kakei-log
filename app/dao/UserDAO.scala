@@ -14,13 +14,14 @@ import play.api.libs.concurrent.Execution.Implicits._
 import models.UserModel
 
 class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigProvider, mailerClient: MailerClient){
-  private class UserTable(tag: Tag) extends Table[UserModel](tag, "User") {
+  private class UserTable(tag: Tag) extends Table[UserModel](tag, "users") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def email = column[String]("mail_address")
     def password = column[String]("password_digest")
-    def verifiyId = column[String]("verifiy_id")
+    def verifyId = column[String]("verifiy_id")
+    def isVerified = column[Boolean]("is_verified", O.Default(false))
 
-    override def * = (id, email, password, verifiyId) <> (UserModel.tupled, UserModel.unapply)
+    override def * = (id, email, password, verifyId, isVerified) <> (UserModel.tupled, UserModel.unapply)
   }
 
   val dbConfig = databaseConfigProvider.get[JdbcProfile]
@@ -29,14 +30,15 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
 
   val digest = (raw: String) => raw.bcrypt
   val isMatch = (candidate: String, expect: String) => candidate.isBcrypted(expect)
-  val uuid = randomUUID.toString
 
   def get(id: Long): Future[Option[UserModel]] = {
     dbConfig.db.run(users.filter(_.id === id).result.headOption)
   }
 
   def add(email: String, rawPassword: String): Future[Boolean] = {
-    val user = UserModel(0, email, digest(rawPassword), uuid)
+    val uuid = randomUUID.toString
+    val user = UserModel(0, email, digest(rawPassword), verifyId = uuid, isVerified = false)
+    println(user)
 //    send(uuid)
     dbConfig.db.run(users += user)
       .map(_ => true)
@@ -75,6 +77,11 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
           Logger.error(ex.getMessage)
           None
       }
+  }
+
+  def verify(verifyId: String): Future[Boolean] = {
+    dbConfig.db.run(users.filter(_.verifyId === verifyId).map(_.isVerified).update(true))
+      .map(_ == 1)
   }
 
   def listAll: Future[Seq[UserModel]] = {

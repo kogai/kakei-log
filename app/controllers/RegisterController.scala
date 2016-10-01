@@ -27,4 +27,11 @@ class RegisterController @Inject() (val messagesApi: MessagesApi, val user: User
       }
     )
   }
+
+  def verify(id: String) = Action.async { implicit request =>
+    user.verify(id).map {
+      case true => Ok(views.html.index("登録完了"))
+      case _ => NotFound(views.html.index("存在しないページです"))
+    }
+  }
 }

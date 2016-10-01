@@ -5,12 +5,16 @@
             <th>ID</th>
             <th>メールアドレス</th>
             <th>パスワード</th>
+            <th>認証ID</th>
+            <th>認証済み</th>
         </tr>
         @users.map { u =>
             <tr>
                 <td>@u.id</td>
                 <td>@u.email</td>
                 <td>@u.password</td>
+                <td>@u.verifyId</td>
+                <td>@u.isVerified</td>
             </tr>
         }
     </table>
