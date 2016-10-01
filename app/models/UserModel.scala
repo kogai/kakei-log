@@ -13,4 +13,4 @@ object UserForm {
   }
 }
 
-case class UserModel (id: Long, email: String, password: String)
+case class UserModel (id: Long, email: String, password: String, verifyId: String)

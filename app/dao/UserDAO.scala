@@ -1,5 +1,6 @@
 package dao
 
+import java.util.UUID.randomUUID
 import play.api.Logger
 import scala.concurrent.Future
 import javax.inject.Inject
@@ -16,8 +17,9 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def email = column[String]("mail_address")
     def password = column[String]("password_digest")
+    def verifiyId = column[String]("verifiy_id")
 
-    override def * = (id, email, password) <> (UserModel.tupled, UserModel.unapply)
+    override def * = (id, email, password, verifiyId) <> (UserModel.tupled, UserModel.unapply)
   }
 
   val dbConfig = databaseConfigProvider.get[JdbcProfile]
@@ -26,13 +28,14 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
 
   val digest = (raw: String) => raw.bcrypt
   val isMatch = (candidate: String, expect: String) => candidate.isBcrypted(expect)
+  val uuid = randomUUID.toString
 
   def get(id: Long): Future[Option[UserModel]] = {
     dbConfig.db.run(users.filter(_.id === id).result.headOption)
   }
 
   def add(email: String, rawPassword: String): Future[Boolean] = {
-      val user = UserModel(0, email, digest(rawPassword))
+    val user = UserModel(0, email, digest(rawPassword), uuid)
     dbConfig.db.run(users += user)
       .map(_ => true)
       .recover {

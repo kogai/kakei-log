@@ -1,7 +1,6 @@
 CREATE DATABASE kakei_log_development;
 DROP TABLE User;
 
-# 0 = False 1 = True
 CREATE TABLE User (
   id MEDIUMINT NOT NULL AUTO_INCREMENT,
   password_digest VARCHAR(255) NOT NULL,
