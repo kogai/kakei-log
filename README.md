@@ -20,7 +20,7 @@ docker-compose exec mysql bash
 mysql -udocker -pdocker
 
 # コンテナの外から
-mysql -h 192.168.99.100 -P 3306 -udocker -pdocker
+mysql -h $DOCKER_IP -P 3306 -udocker -pdocker -D kakei_log_development
 ```
 
 ## 依存ライブラリのインストール

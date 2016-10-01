@@ -36,7 +36,6 @@ object Users {
   val users = TableQuery[UserTableDef]
 
   def add(user: UserModel): Future[String] = {
-    println(user)
     dbConfig.db.run(users += user)
       .map(res => "新規ユーザ登録が成功しました")
       .recover {
