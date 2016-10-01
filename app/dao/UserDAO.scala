@@ -2,6 +2,7 @@ package dao
 
 import java.util.UUID.randomUUID
 import play.api.Logger
+import play.api.libs.mailer._
 import scala.concurrent.Future
 import javax.inject.Inject
 import play.api.db.slick.DatabaseConfigProvider
@@ -12,7 +13,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 
 import models.UserModel
 
-class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigProvider){
+class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigProvider, mailerClient: MailerClient){
   private class UserTable(tag: Tag) extends Table[UserModel](tag, "User") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def email = column[String]("mail_address")
@@ -36,6 +37,7 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
 
   def add(email: String, rawPassword: String): Future[Boolean] = {
     val user = UserModel(0, email, digest(rawPassword), uuid)
+//    send(uuid)
     dbConfig.db.run(users += user)
       .map(_ => true)
       .recover {
@@ -43,6 +45,22 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
           Logger.info(ex.getCause.getMessage)
           false
       }
+  }
+
+  def send(uuid: String): Unit = {
+    val mail = Email(
+      subject = "タイトル",
+      from = "運営 FROM <kogai0121@gmail.com>",
+      to = Seq("テスト TO <kogai0121@gmail.com>"),
+      bodyText = Some("本文メッセージ"),
+      bodyHtml = Some(
+        s"""
+          |本文メッセージ<br />
+          |<a href="http://localhost:9000/verify/$uuid">認証ページ</a>
+        """.stripMargin)
+    )
+    println(mail)
+    mailerClient.send(mail)
   }
 
   def auth(email: String, rawPassword: String): Future[Option[UserModel]] = {
