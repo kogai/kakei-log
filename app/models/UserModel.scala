@@ -1,6 +1,6 @@
 package models
 
-import play.api.Play
+import play.api.{Logger, Play}
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.db.slick.DatabaseConfigProvider
@@ -16,30 +16,34 @@ object UserForm {
   var form = Form {
     mapping(
       "email" -> email,
-      "password" -> text.verifying("4~32文字以上", { p => p.length() >= 4 && p.length <= 32 })
+      "password" -> text.verifying("パスワードは4~32文字以上", { p => p.length() >= 4 && p.length <= 32 })
     )(UserFormModel.apply)(UserFormModel.unapply)
   }
 }
 
-case class UserModel (id: Option[Long], email: String, password: String)
+case class UserModel (id: Long, email: String, password: String)
 
 class UserTableDef(tag: Tag) extends Table[UserModel](tag, "User") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def email = column[String]("mail_address")
   def password = column[String]("password_digest")
 
-  override def * = (id.?, email, password) <> (UserModel.tupled, UserModel.unapply)
+  override def * = (id, email, password) <> (UserModel.tupled, UserModel.unapply)
 }
 
 object Users {
   val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
   val users = TableQuery[UserTableDef]
 
-  def add(user: UserModel): Future[String] = {
+  def add(email: String, rawPassword: String): Future[Boolean] = {
+    val user = UserModel(0, email, digest(rawPassword))
     dbConfig.db.run(users += user)
-      .map(res => "新規ユーザ登録が成功しました")
+      .map(res => true)
       .recover {
-        case ex: Exception => ex.getCause.getMessage
+        case ex: Exception => {
+          Logger.info(ex.getCause.getMessage)
+          false
+        }
       }
   }
 

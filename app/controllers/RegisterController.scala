@@ -1,10 +1,13 @@
 package controllers
 
-import javax.inject.{Singleton, Inject}
+import javax.inject.{Inject, Singleton}
+
 import play.api.mvc._
 import play.api.i18n._
-import models.{UserForm, Users, UserModel}
+import models.{UserForm, UserModel, Users}
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 @Singleton
 class RegisterController @Inject() (val messagesApi: MessagesApi) extends Controller with I18nSupport {
@@ -13,11 +16,14 @@ class RegisterController @Inject() (val messagesApi: MessagesApi) extends Contro
   }
 
   def create = Action.async { implicit request =>
-    val input = UserForm.form.bindFromRequest.get
-    val newUser = UserModel(None, input.email, input.password)
-    Users.add(newUser).map { implicit res =>
-      println(res)
-      Redirect(routes.HomeController.index())
-    }
+    UserForm.form.bindFromRequest.fold(
+      e => Future.successful(BadRequest(views.html.register(e))),
+      input => {
+        Users.add(input.email, input.password).map {
+          case true => Redirect(routes.LoginController.index())
+          case _ => BadRequest(views.html.error("アカウントの登録に失敗しました"))
+        }
+      }
+    )
   }
 }

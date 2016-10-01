@@ -16,9 +16,7 @@ class LoginController @Inject() (val messagesApi: MessagesApi) extends Controlle
   def login = Action.async { implicit request =>
     val sessionVar = "userInfo"
     UserForm.form.bindFromRequest.fold(
-      e => {
-        Future.successful(BadRequest(views.html.login(e)))
-      },
+      e => Future.successful(BadRequest(views.html.login(e))),
       user => {
         Users.auth(user.email, user.password).map {
           case Some(u) => Ok(views.html.index("ログインしました"))
