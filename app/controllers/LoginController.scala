@@ -22,7 +22,7 @@ class LoginController @Inject() (val messagesApi: MessagesApi, val user: UserDAO
         user.auth(input.email, input.password).map {
           case Some(u) => Ok(views.html.index("ログインしました"))
             .withSession(user.SESSION_KEY -> u.id.toString)
-          case None => Unauthorized(views.html.error("ログインに失敗しました"))
+          case None => Unauthorized(views.html.error("メールアドレスかパスワードが間違っています"))
         }
       }
     )

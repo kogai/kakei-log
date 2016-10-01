@@ -11,7 +11,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 
 import models.UserModel
 
-class UserDAO @Inject() (val databaseConfigProvider: DatabaseConfigProvider){
+class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigProvider){
   private class UserTable(tag: Tag) extends Table[UserModel](tag, "User") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def email = column[String]("mail_address")
@@ -48,6 +48,11 @@ class UserDAO @Inject() (val databaseConfigProvider: DatabaseConfigProvider){
         case Some(u) if isMatch(rawPassword, u.password) => Some(u)
         case Some(u) => None
         case None => None
+      }
+      .recover {
+        case ex: IllegalArgumentException =>
+          Logger.error(ex.getMessage)
+          None
       }
   }
 
