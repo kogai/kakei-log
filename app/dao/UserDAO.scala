@@ -39,7 +39,7 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
     val uuid = randomUUID.toString
     val user = UserModel(0, email, digest(rawPassword), verifyId = uuid, isVerified = false)
     println(user)
-//    send(uuid)
+    send(uuid)
     dbConfig.db.run(users += user)
       .map(_ => true)
       .recover {
