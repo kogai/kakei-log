@@ -44,7 +44,7 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
       .map(_ => true)
       .recover {
         case ex: Exception =>
-          Logger.info(ex.getCause.getMessage)
+          Logger.info(ex.getMessage)
           false
       }
   }

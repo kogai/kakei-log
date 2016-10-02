@@ -4,7 +4,7 @@ POST    /login                      controllers.LoginController.login
 GET     /logout                     controllers.LoginController.logout
 GET     /list                       controllers.LoginController.list
 GET     /register                   controllers.RegisterController.index
-GET     /verify/:verify_id                 controllers.RegisterController.verify(verify_id: String)
+GET     /verify/:verify_id          controllers.RegisterController.verify(verify_id: String)
 POST    /register                   controllers.RegisterController.create
 
 # An example controller showing how to use dependency injection
