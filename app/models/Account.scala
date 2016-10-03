@@ -7,4 +7,5 @@ case class Account (id: Long,
                     cost: Long,
                     category: Int,
                     register_at: Date,
-                    payment_from: Int)
+                    payment_source: Int,
+                    payment_destination: Int)
