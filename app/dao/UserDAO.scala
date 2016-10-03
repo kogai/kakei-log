@@ -14,7 +14,7 @@ import play.api.libs.concurrent.Execution.Implicits._
 import models.UserModel
 
 class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigProvider, mailerClient: MailerClient){
-  private class UserTable(tag: Tag) extends Table[UserModel](tag, "users") {
+  private class UserTable(tag: Tag) extends Table[UserModel](tag, "User") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def email = column[String]("mail_address")
     def password = column[String]("password_digest")

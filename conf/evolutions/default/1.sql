@@ -1,7 +1,7 @@
 # --- !Ups
 
-CREATE TABLE users (
-  id MEDIUMINT NOT NULL AUTO_INCREMENT,
+CREATE TABLE User (
+  id INT NOT NULL AUTO_INCREMENT,
   password_digest VARCHAR(255) NOT NULL,
   mail_address VARCHAR(255) NOT NULL,
   is_verified BOOLEAN NOT NULL DEFAULT FALSE,
@@ -12,5 +12,5 @@ CREATE TABLE users (
 
 # --- !Downs
 
-DROP TABLE users;
+DROP TABLE User;
 
