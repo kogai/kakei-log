@@ -25,7 +25,6 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
   }
 
   val dbConfig = databaseConfigProvider.get[JdbcProfile]
-  val SESSION_KEY = "SESSION_KEY"
   private val users = TableQuery[UserTable]
 
   val digest = (raw: String) => raw.bcrypt
