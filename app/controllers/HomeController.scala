@@ -10,5 +10,4 @@ class HomeController @Inject() extends Controller {
   def index = AuthAction {
     Ok(views.html.index(message))
   }
-
 }
