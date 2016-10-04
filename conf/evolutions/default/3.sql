@@ -7,6 +7,17 @@ CREATE TABLE Category (
   PRIMARY KEY (`id`)
 );
 
+INSERT INTO Category (name, hierarchy) VALUES ('食費', 0);
+INSERT INTO Category (name, hierarchy) VALUES ('肉類', 1);
+INSERT INTO Category (name, hierarchy) VALUES ('魚介類', 1);
+INSERT INTO Category (name, hierarchy) VALUES ('野菜', 1);
+INSERT INTO Category (name, hierarchy) VALUES ('乳製品', 1);
+INSERT INTO Category (name, hierarchy) VALUES ('加工食品', 1);
+INSERT INTO Category (name, hierarchy) VALUES ('調味料', 1);
+
+INSERT INTO Category (name, hierarchy) VALUES ('日用品', 0);
+INSERT INTO Category (name, hierarchy) VALUES ('清掃用品', 1);
+
 # --- !Downs
 
 DROP TABLE Category;

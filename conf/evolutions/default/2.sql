@@ -7,13 +7,13 @@ CREATE TABLE Account (
   cost MEDIUMINT NOT NULL,
   category INT NOT NULL,
   register_at DATE NOT NULL,
-  payment_destination INT,
-  payment_source INT,
+  payment_destination_id INT,
+  payment_source_id INT,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES User(`id`),
+  FOREIGN KEY (`user_id`) REFERENCES User(`user_id`),
   FOREIGN KEY (`category`) REFERENCES Category(`id`),
-  FOREIGN KEY (`payment_destination`) REFERENCES PaymentDestination(`id`),
-  FOREIGN KEY (`payment_source`) REFERENCES PaymentSource(`id`)
+  FOREIGN KEY (`payment_destination_id`) REFERENCES PaymentDestination(`id`),
+  FOREIGN KEY (`payment_source_id`) REFERENCES PaymentSource(`payment_source_id`)
 );
 
 # --- !Downs

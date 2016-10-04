@@ -3,12 +3,12 @@
 CREATE TABLE PaymentSource (
   id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255),
-  user_id INT NOT NULL,
-  FOREIGN KEY (`user_id`) REFERENCES User(`id`),
   PRIMARY KEY (`id`)
 );
 
-# --- !Downs
+INSERT INTO PaymentSource (name) VALUES ('財布');
+INSERT INTO PaymentSource (name) VALUES ('銀行');
 
+# --- !Downs
 DROP TABLE PaymentSource;
 
