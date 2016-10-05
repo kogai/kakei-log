@@ -1,22 +1,24 @@
 # --- !Ups
-
-CREATE TABLE Account (
-  id INT NOT NULL AUTO_INCREMENT,
-  user_id INT NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  cost MEDIUMINT NOT NULL,
-  category_id INT NOT NULL,
-  register_at DATE NOT NULL,
-  payment_destination_id INT,
-  payment_source_id INT,
-  PRIMARY KEY (`id`),
+CREATE TABLE Category (
+  category_id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255),
+  hierarchy INT NOT NULL DEFAULT 0,
+  user_id INT NOT NULL DEFAULT 0,
+  parent_id INT REFERENCES Category(`category_id`),
+  UNIQUE KEY (`name`),
   FOREIGN KEY (`user_id`) REFERENCES User(`user_id`),
-  FOREIGN KEY (`category_id`) REFERENCES Category(`category_id`),
-  FOREIGN KEY (`payment_destination_id`) REFERENCES PaymentDestination(`id`),
-  FOREIGN KEY (`payment_source_id`) REFERENCES PaymentSource(`id`)
+  PRIMARY KEY (`category_id`)
 );
 
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('食費', 0, NULL);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('肉類', 1, 1);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('魚介類', 1, 1);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('野菜', 1, 1);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('乳製品', 1, 1);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('加工食品', 1, 1);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('調味料', 1, 1);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('日用品', 0, NULL);
+INSERT INTO Category (name, hierarchy, parent_id) VALUES ('清掃用品', 1, 8);
+
 # --- !Downs
-
-DROP TABLE Account;
-
+DROP TABLE Category;

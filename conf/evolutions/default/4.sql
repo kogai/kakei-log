@@ -1,19 +1,22 @@
 # --- !Ups
 
-CREATE TABLE PaymentSource (
-  payment_source_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE PaymentDestination (
+  payment_destination_id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255),
-  user_id INT DEFAULT NULL,
+  user_id INT NOT NULL DEFAULT 0,
   amount INT DEFAULT 0,
   UNIQUE KEY (`name`),
   FOREIGN KEY (`user_id`) REFERENCES User(`user_id`),
-  PRIMARY KEY (`payment_source_id`)
+  PRIMARY KEY (`payment_destination_id`)
 );
 
-INSERT INTO PaymentSource (name) VALUES ('財布');
-INSERT INTO PaymentSource (name) VALUES ('銀行');
-INSERT INTO PaymentSource (name) VALUES ('ポイント');
+# 初期値の挿入
+INSERT INTO PaymentDestination (name) VALUES ('Amazon.jp');
+INSERT INTO PaymentDestination (name) VALUES ('スーパー');
+INSERT INTO PaymentDestination (name) VALUES ('コンビニ');
+INSERT INTO PaymentDestination (name) VALUES ('生活協同組合');
+INSERT INTO PaymentDestination (name) VALUES ('その他');
 
 # --- !Downs
-DROP TABLE UserWithPaymentSource;
-DROP TABLE PaymentSource;
+DROP TABLE PaymentDestination;
+
