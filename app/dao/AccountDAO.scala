@@ -12,24 +12,24 @@ import scala.concurrent.Future
 
 class AccountDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigProvider){
   private class AccountTable(tag: Tag) extends Table[Account] (tag, "Account"){
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def account_id = column[Long]("account_id", O.PrimaryKey, O.AutoInc)
     def user_id = column[Long]("user_id")
     def name = column[String]("name")
     def cost = column[Long]("cost")
     def category = column[Int]("category")
     def register_at = column[Date]("register_at")
-    def payment_source = column[Int]("payment_source")
-    def payment_destination = column[Int]("payment_destination")
+    def payment_source_id = column[Int]("payment_source_id")
+    def payment_destination_id = column[Int]("payment_destination_id")
 
     override def * = (
-      id,
+      account_id,
       user_id,
       name,
       cost,
       category,
       register_at,
-      payment_source,
-      payment_destination) <> (Account.tupled, Account.unapply)
+      payment_source_id,
+      payment_destination_id) <> (Account.tupled, Account.unapply)
   }
 
   val dbConfig = databaseConfigProvider.get[JdbcProfile]
