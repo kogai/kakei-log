@@ -10,10 +10,10 @@ CREATE TABLE Account (
   payment_destination_id INT,
   payment_source_id INT,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES User(`user_id`),
+  FOREIGN KEY (`user_id`) REFERENCES User(`id`),
   FOREIGN KEY (`category`) REFERENCES Category(`id`),
   FOREIGN KEY (`payment_destination_id`) REFERENCES PaymentDestination(`id`),
-  FOREIGN KEY (`payment_source_id`) REFERENCES PaymentSource(`payment_source_id`)
+  FOREIGN KEY (`payment_source_id`) REFERENCES PaymentSource(`id`)
 );
 
 # --- !Downs

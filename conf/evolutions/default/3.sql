@@ -18,6 +18,14 @@ INSERT INTO Category (name, hierarchy) VALUES ('調味料', 1);
 INSERT INTO Category (name, hierarchy) VALUES ('日用品', 0);
 INSERT INTO Category (name, hierarchy) VALUES ('清掃用品', 1);
 
+# 中間テーブル
+CREATE TABLE UserWithCategory (
+  user_id INT,
+  category_id INT,
+  FOREIGN KEY (`user_id`) REFERENCES User(`id`),
+  FOREIGN KEY (`category_id`) REFERENCES Category(`id`)
+);
+
 # --- !Downs
 
 DROP TABLE Category;
