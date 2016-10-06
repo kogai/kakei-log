@@ -1,0 +1,17 @@
+@(ps: Seq[PaymentDestination])
+@main("支払い元一覧ページ") {
+    <table class="uk-table uk-table-hover uk-table-striped uk-table-condensed">
+        <tr>
+            <th>支払い元ID</th>
+            <th>名前</th>
+            <th>ユーザID</th>
+        </tr>
+        @ps.map { c =>
+            <tr>
+                <td>@c.payment_destination_id</td>
+                <td>@c.name</td>
+                <td>@c.user_id</td>
+            </tr>
+        }
+    </table>
+}

@@ -4,33 +4,40 @@ import javax.inject._
 
 import play.api.mvc._
 import services.AuthAction
-import dao.{UserDAO, CategoryDAO, PaymentSourceDAO}
+import dao.{UserDAO, CategoryDAO, PaymentSourceDAO, PaymentDestinationDAO}
 import play.api.libs.concurrent.Execution.Implicits._
 
 @Singleton
-class HomeController @Inject() (val user: UserDAO,
-                                val category: CategoryDAO,
-                                val paymentSource: PaymentSourceDAO) extends Controller {
+class HomeController @Inject() (val userDAO: UserDAO,
+                                val categoryDAO: CategoryDAO,
+                                val paymentSourceDAO: PaymentSourceDAO,
+                                val paymentDestinationDAO: PaymentDestinationDAO) extends Controller {
   val message = "私の新しいアプリケーション"
   def index = AuthAction {
     Ok(views.html.index(message))
   }
 
   def users = Action.async { implicit request =>
-    user.list map { u =>
+    userDAO.list map { u =>
       Ok(views.html.users(u))
     }
   }
 
   def categories = Action.async { implicit request =>
-    category.list map { c =>
+    categoryDAO.list map { c =>
       Ok(views.html.categories(c))
     }
   }
 
   def paymentSources = Action.async { implicit request =>
-    paymentSource.list map { p =>
+    paymentSourceDAO.list map { p =>
       Ok(views.html.paymentSources(p))
+    }
+  }
+
+  def paymentDestinations = Action.async { implicit request =>
+    paymentDestinationDAO.list map { p =>
+      Ok(views.html.paymentDestination(p))
     }
   }
 }
