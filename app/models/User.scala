@@ -13,4 +13,4 @@ object UserForm {
   }
 }
 
-case class UserModel (id: Long, email: String, password: String, verifyId: String, isVerified: Boolean)
+case class User(user_id: Option[Long], email: String, password: String, verifyId: String, isVerified: Boolean)

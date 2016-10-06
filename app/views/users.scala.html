@@ -1,4 +1,4 @@
-@(users: Seq[UserModel])
+@(users: Seq[User])
 @main("ユーザ一覧ページ") {
     <table class="uk-table uk-table-hover uk-table-striped uk-table-condensed">
         <tr>
@@ -10,7 +10,7 @@
         </tr>
         @users.map { u =>
             <tr>
-                <td>@u.id</td>
+                <td>@u.user_id</td>
                 <td>@u.email</td>
                 <td>@u.password</td>
                 <td>@u.verifyId</td>

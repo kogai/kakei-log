@@ -11,17 +11,17 @@ import slick.driver.MySQLDriver.api._
 import com.github.t3hnar.bcrypt._
 import play.api.libs.concurrent.Execution.Implicits._
 
-import models.UserModel
+import models.User
 
 class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigProvider, mailerClient: MailerClient){
-  private class UserTable(tag: Tag) extends Table[UserModel](tag, "User") {
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+  private class UserTable(tag: Tag) extends Table[User](tag, "User") {
+    def user_id = column[Option[Long]]("user_id", O.PrimaryKey, O.AutoInc)
     def email = column[String]("mail_address")
     def password = column[String]("password_digest")
     def verifyId = column[String]("verifiy_id")
     def isVerified = column[Boolean]("is_verified", O.Default(false))
 
-    override def * = (id, email, password, verifyId, isVerified) <> (UserModel.tupled, UserModel.unapply)
+    override def * = (user_id, email, password, verifyId, isVerified) <> (User.tupled, User.unapply)
   }
 
   val dbConfig = databaseConfigProvider.get[JdbcProfile]
@@ -30,13 +30,13 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
   val digest = (raw: String) => raw.bcrypt
   val isMatch = (candidate: String, expect: String) => candidate.isBcrypted(expect)
 
-  def get(id: Long): Future[Option[UserModel]] = {
-    dbConfig.db.run(users.filter(_.id === id).result.headOption)
+  def get(id: Long): Future[Option[User]] = {
+    dbConfig.db.run(users.filter(_.user_id === id).result.headOption)
   }
 
   def add(email: String, rawPassword: String): Future[Boolean] = {
     val uuid = randomUUID.toString
-    val user = UserModel(0, email, digest(rawPassword), verifyId = uuid, isVerified = false)
+    val user = User(None, email, digest(rawPassword), verifyId = uuid, isVerified = false)
     println(user)
     send(uuid)
     dbConfig.db.run(users += user)
@@ -64,7 +64,7 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
     mailerClient.send(mail)
   }
 
-  def auth(email: String, rawPassword: String): Future[Option[UserModel]] = {
+  def auth(email: String, rawPassword: String): Future[Option[User]] = {
     dbConfig.db.run(users.filter(_.email === email).result.headOption)
       .map {
         case Some(u) if isMatch(rawPassword, u.password) => Some(u)
@@ -83,7 +83,7 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
       .map(_ == 1)
   }
 
-  def list: Future[Seq[UserModel]] = {
+  def list: Future[Seq[User]] = {
     dbConfig.db.run(users.result)
   }
 }
