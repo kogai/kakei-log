@@ -20,31 +20,31 @@ class HomeController @Inject() (val userDAO: UserDAO,
 
   def users = Action.async { implicit request =>
     userDAO.list map { u =>
-      Ok(views.html.users(u))
+      Ok(views.html.sample.users(u))
     }
   }
 
   def categories = Action.async { implicit request =>
     categoryDAO.list map { c =>
-      Ok(views.html.categories(c))
+      Ok(views.html.sample.categories(c))
     }
   }
 
   def paymentSources = Action.async { implicit request =>
     paymentSourceDAO.list map { p =>
-      Ok(views.html.paymentSources(p))
+      Ok(views.html.sample.paymentSources(p))
     }
   }
 
   def paymentDestinations = Action.async { implicit request =>
     paymentDestinationDAO.list.map { p =>
-      Ok(views.html.paymentDestination(p))
+      Ok(views.html.sample.paymentDestination(p))
     }
   }
 
   def accounts = Action.async { implicit request =>
     accountDAO.list.map { p =>
-      Ok(views.html.account(p))
+      Ok(views.html.sample.account(p))
     }
   }
 }
