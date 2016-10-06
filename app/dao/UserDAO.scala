@@ -83,7 +83,7 @@ class UserDAO @Inject() (protected val databaseConfigProvider: DatabaseConfigPro
       .map(_ == 1)
   }
 
-  def listAll: Future[Seq[UserModel]] = {
+  def list: Future[Seq[UserModel]] = {
     dbConfig.db.run(users.result)
   }
 }

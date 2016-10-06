@@ -2,7 +2,7 @@
 
 CREATE TABLE Account (
   id INT NOT NULL AUTO_INCREMENT,
-  user_id INT NOT NULL,
+  user_id INT DEFAULT NULL,
   name VARCHAR(255) NOT NULL,
   cost INT NOT NULL,
   category_id INT NOT NULL,

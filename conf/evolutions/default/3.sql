@@ -3,7 +3,7 @@
 CREATE TABLE PaymentSource (
   payment_source_id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255),
-  user_id INT NOT NULL DEFAULT 0,
+  user_id INT DEFAULT NULL,
   amount INT DEFAULT 0,
   UNIQUE KEY (`name`),
   FOREIGN KEY (`user_id`) REFERENCES User(`user_id`),

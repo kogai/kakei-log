@@ -32,10 +32,4 @@ class LoginController @Inject() (val messagesApi: MessagesApi, val user: UserDAO
   def logout = Action { implicit request =>
     Ok(views.html.index("ログアウトしました")).withNewSession
   }
-
-  def list = Action.async { implicit request =>
-    user.listAll map { users =>
-      Ok(views.html.users(users))
-    }
-  }
 }

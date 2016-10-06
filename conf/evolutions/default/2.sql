@@ -3,7 +3,7 @@ CREATE TABLE Category (
   category_id INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255),
   hierarchy INT NOT NULL DEFAULT 0,
-  user_id INT NOT NULL DEFAULT 0,
+  user_id INT DEFAULT NULL,
   parent_id INT REFERENCES Category(`category_id`),
   UNIQUE KEY (`name`),
   FOREIGN KEY (`user_id`) REFERENCES User(`user_id`),

@@ -6,7 +6,7 @@ import java.sql.Date
 import play.api.db.slick.DatabaseConfigProvider
 import slick.driver.JdbcProfile
 import slick.driver.MySQLDriver.api._
-import models.{Account, UserModel}
+import models.Account
 
 import scala.concurrent.Future
 

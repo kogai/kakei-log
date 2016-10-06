@@ -1,0 +1,21 @@
+@(categories: Seq[Category])
+@main("カテゴリ一覧ページ") {
+    <table class="uk-table uk-table-hover uk-table-striped uk-table-condensed">
+        <tr>
+            <th>カテゴリID</th>
+            <th>ヒエラルキー</th>
+            <th>名前</th>
+            <th>親カテゴリID</th>
+            <th>ユーザID</th>
+        </tr>
+        @categories.map { c =>
+            <tr>
+                <td>@c.category_id</td>
+                <td>@c.hierarchy</td>
+                <td>@c.name</td>
+                <td>@c.parent_id</td>
+                <td>@c.user_id</td>
+            </tr>
+        }
+    </table>
+}

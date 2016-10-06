@@ -1,7 +1,7 @@
 # --- !Ups
 
 CREATE TABLE User (
-  user_id INT NOT NULL AUTO_INCREMENT,
+  user_id INT AUTO_INCREMENT,
   password_digest VARCHAR(255) NOT NULL,
   mail_address VARCHAR(255) NOT NULL,
   is_verified BOOLEAN NOT NULL DEFAULT FALSE,
