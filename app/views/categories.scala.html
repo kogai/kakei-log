@@ -1,4 +1,4 @@
-@(categories: Seq[Category])
+@(cs: Seq[Category])
 @main("カテゴリ一覧ページ") {
     <table class="uk-table uk-table-hover uk-table-striped uk-table-condensed">
         <tr>
@@ -8,7 +8,7 @@
             <th>親カテゴリID</th>
             <th>ユーザID</th>
         </tr>
-        @categories.map { c =>
+        @cs.map { c =>
             <tr>
                 <td>@c.category_id</td>
                 <td>@c.hierarchy</td>

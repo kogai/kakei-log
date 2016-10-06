@@ -1,6 +1,7 @@
 GET     /                           controllers.HomeController.index
 GET     /list/user                  controllers.HomeController.users
 GET     /list/category              controllers.HomeController.categories
+GET     /list/payment_source        controllers.HomeController.paymentSources
 
 GET     /login                      controllers.LoginController.index
 POST    /login                      controllers.LoginController.login
