@@ -1,11 +1,12 @@
 package models
 import java.sql.Date
 
-case class Account (id: Long,
-                    user_id: Long,
+case class Account (account_id: Long,
+                    user_id: Option[Long],
                     name: String,
-                    cost: Long,
-                    category: Int,
+                    amount: Long,
+                    category_id: Long,
                     register_at: Date,
-                    payment_source: Int,
-                    payment_destination: Int)
+                    payment_source: Option[Long],
+                    payment_destination: Option[Long])
+
