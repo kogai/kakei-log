@@ -9,4 +9,3 @@ case class Account (account_id: Long,
                     register_at: Date,
                     payment_source: Option[Long],
                     payment_destination: Option[Long])
-

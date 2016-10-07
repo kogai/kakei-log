@@ -28,3 +28,9 @@ mysql -h $DOCKER_IP -P 3306 -udocker -pdocker -D kakei_log_development
 ```bash
 activator compile
 ```
+
+## テストの個別実行
+
+```bas
+activator "testOnly CategorySpec"
+```

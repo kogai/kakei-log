@@ -1,7 +1,6 @@
 package dao
 
 import javax.inject.Inject
-import java.sql.Date
 
 import play.api.db.slick.DatabaseConfigProvider
 import slick.driver.JdbcProfile
