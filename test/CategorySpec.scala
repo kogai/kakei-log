@@ -4,7 +4,7 @@ import models.CategoryTree.foldCategoryTree
 
 class CategorySpec extends PlaySpec {
   "Models.Category" should {
-    "Categoryテーブルからカテゴリーツリーを作れる" in {
+    "CategoryテーブルからCategoryツリーを作れる" in {
       val mock_1 = Category(category_id = 1, name = "食費", hierarchy = 0, user_id = None, parent_id = None)
       val mock_2 = Category(category_id = 2, name = "肉類", hierarchy = 1, user_id = None, parent_id = Some(1))
       val mock_3 = Category(category_id = 3, name = "魚介類", hierarchy = 1, user_id = None, parent_id = Some(1))

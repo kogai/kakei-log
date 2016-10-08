@@ -23,7 +23,7 @@ object CategoryTree {
                 parent.children :+ new CategoryTree(next.category_id, next.name, Seq()))
             } else { parent }
           }
-        case None => acc ++ Seq(new CategoryTree(next.category_id, next.name, Seq()))
+        case None => acc :+ new CategoryTree(next.category_id, next.name, Seq())
       }
     }
   }
