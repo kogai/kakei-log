@@ -33,4 +33,5 @@ activator compile
 
 ```bas
 activator "testOnly CategorySpec"
+activator "~testOnly CategorySpec"
 ```
