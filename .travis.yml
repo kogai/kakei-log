@@ -1,5 +1,8 @@
 language: scala
 scala:
-   - 2.11.7
+- 2.11.7
 jdk:
-  - oraclejdk8
+- oraclejdk8
+notifications:
+  slack:
+    secure: Uuv9HwdY04duDwxr7rgMp3pcZGZrS9Ejixidn/+twOAcXfOoHiL2Fc5BOSDCEWOiXyPP9fcUN4Z4S4vS18Oz+4+msOxULNgaOiEZ9YKa9mZgzbQ7LHFfWPC1PpwtwJymDg87Uu/UrG/455P1niQFCRBVNaL7uQ35KAsc/bW2enDyOqRVCcBOdnhzx2MZMx9usHk3Nde5+EOBOsPtSCLIefVYY9D1nR6z+WTmLztf2ViAdLnHcOF5Iz4eSJn9QeXPvER6i401KNEmjN1rCjQEFfwhTm1NRCKmSMFzaVMqfPQqPzfOB28YgRaBgSXE1TTtwKC3K5nrqm93OmZRpwBmGi4l1QR4a5D1j9fK//AwhShTaGQEHiO7qwqfhpa9O0bYhn0yQOhDl2mvf+dSDpySqD2sMCKTqo8t3p222OgK9Z6Oy68s/F5XPIfV1Bf3LL+hsVt0oJSCBS3MdHcg6XwxbZsqDjDWPGdo5jfhLlbD0SSikfmnSuEs3SMKSHSv9nm+zDcJYHE7QLEgRCUb314Wqg+T5t99WgYHOSQ1IfB/1FnVPo9TGLNodyVjvacgD90b9n9PZ+GfwuyNJ4uxMg2NjQD10eLiWthuIxWspQcBVoPB3z/ZirGSh5WlTAe2ZPMjYyXzJjKGivj8MBBnboMeedbelESGs/iUmDhGgkXsS7M=
