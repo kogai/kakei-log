@@ -18,10 +18,9 @@ object CategoryTree {
         case Some(parent_id) => acc
           .map { parent =>
             if (parent.category_id == parent_id) {
-              val el = new CategoryTree(next.category_id, next.name, Seq())
-              println(parent.category_id, parent_id, parent, el)
-              parent.children :+ el
-              parent
+              CategoryTree(parent.category_id,
+                parent.name,
+                parent.children :+ new CategoryTree(next.category_id, next.name, Seq()))
             } else { parent }
           }
         case None => acc ++ Seq(new CategoryTree(next.category_id, next.name, Seq()))
