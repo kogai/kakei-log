@@ -18,7 +18,6 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
       contentAsString(userList) must include ("test@test.com")
       contentAsString(userList) must include ("yet-register@test.com")
     }
-
   }
 
 //  "CountController" should {
